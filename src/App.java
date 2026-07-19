@@ -1,4 +1,6 @@
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,7 +23,7 @@ public class App {
 
         // se le esta dando un tañaño a la pantalla
         frmiVentana.add(plnmiPanel);
-        frmiVentana.setSize(600,600);
+        frmiVentana.setSize(800,800);
        
 
         //creacion del menu flotante
@@ -39,7 +41,11 @@ public class App {
         itemBorrarNodo.addActionListener(e -> JOptionPane.showMessageDialog(frmiVentana,""));
          itemAnadirNodo.addActionListener(e -> JOptionPane.showMessageDialog(frmiVentana, "Se ha añadido otro nodo"));
         
+         //creacion del label para la añadir la foto
+         JLabel miFotito = new JLabel();
+         miFotito.setIcon(new ImageIcon(App.class.getResource("/imagenes/imagen1.png")));
 
+         frmiVentana.add(miFotito);
          //esto es para mostrar el menu cuando detecte el click derecho
          plnmiPanel.addMouseListener(new MouseAdapter() {
             @Override
