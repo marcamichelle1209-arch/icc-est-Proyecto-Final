@@ -1,5 +1,5 @@
 package structures.node;
 
-public class node {
+public class Node {
     
 }
