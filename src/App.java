@@ -5,13 +5,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.event.MouseInputAdapter;
+
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-
-
 
 public class App {
     public static void main(String[] args) throws Exception {
