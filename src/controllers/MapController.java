@@ -9,7 +9,8 @@ import persistence.GraphRepository;
 import structures.graphs.Graph;
 import structures.graphs.PathFinder;
 import structures.graphs.PathResult;
-
+import structures.implementations.BFSPathFinder;
+import structures.implementations.DFSPathFinder;
 import structures.node.Node;
 import views.MapPanel;
 
