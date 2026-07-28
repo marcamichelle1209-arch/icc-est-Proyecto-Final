@@ -6,6 +6,7 @@ import javax.swing.Timer;
 import models.MapPoint;
 import models.VisualizationMode;
 import persistence.GraphRepository;
+import structures.graphs.Edge;
 import structures.graphs.Graph;
 import structures.graphs.PathFinder;
 import structures.graphs.PathResult;
@@ -51,14 +52,56 @@ public class MapController {
         this.onSelectionUpdated = callback;
     }
 
-    // --- Activar modo agregar nodo ---
+    // --- Siembra automatica: red tipo grid de calles (filas x columnas), como cuadras urbanas ---
+    // Cada nodo se conecta con su vecino de la derecha y con el de abajo, simulando cuadras.
+    // Solo corre si el grafo esta vacio (no pisa datos guardados previamente).
+    public void sembrarNodosSiVacio() {
+        if (!mapGraph.getNodes().isEmpty()) {
+            return;
+        }
+
+        int filas = 4;
+        int columnas = 5;
+        int inicioX = 480;
+        int inicioY = 260;
+        int pasoX = 200;
+        int pasoY = 170;
+
+        MapPoint[][] grilla = new MapPoint[filas][columnas];
+
+        for (int f = 0; f < filas; f++) {
+            for (int c = 0; c < columnas; c++) {
+                String id = "" + (char) ('A' + f) + (c + 1); // A1, A2, ... B1, B2, ...
+                int x = inicioX + c * pasoX;
+                int y = inicioY + f * pasoY;
+                MapPoint punto = new MapPoint(id, x, y);
+                grilla[f][c] = punto;
+                mapGraph.add(punto);
+            }
+        }
+
+        // conecta cada nodo con su vecino horizontal (misma calle) y vertical (misma avenida)
+        for (int f = 0; f < filas; f++) {
+            for (int c = 0; c < columnas; c++) {
+                if (c + 1 < columnas) {
+                    mapGraph.addEdge(grilla[f][c], grilla[f][c + 1]);
+                }
+                if (f + 1 < filas) {
+                    mapGraph.addEdge(grilla[f][c], grilla[f + 1][c]);
+                }
+            }
+        }
+
+        repository.save(mapGraph);
+        mapPanel.repaint();
+    }
+
     public void activarAgregarNodo() {
         agregarNodo = true;
         cancelarSeleccion();
         JOptionPane.showMessageDialog(null, "Modo activado: haz clic en el mapa para ubicar un nodo.");
     }
 
-    // --- Clic sobre el mapa (llamado desde MapPanel) ---
     public void onMapClick(int x, int y) {
         ultimoClic = new MapPoint("temp", x, y);
 
@@ -72,13 +115,15 @@ public class MapController {
     private MapPoint buscarNodoCercano(int x, int y) {
         for (Node<MapPoint> nodo : mapGraph.getNodes()) {
             MapPoint p = nodo.getData();
-            if (Math.abs(p.getX() - x) <= 10 && Math.abs(p.getY() - y) <= 10) {
+            if (Math.abs(p.getX() - x) <= 12 && Math.abs(p.getY() - y) <= 12) {
                 return p;
             }
         }
         return null;
     }
 
+    // Al seleccionar el segundo nodo, se dibuja al instante una linea punteada de "vista previa"
+    // entre ambos, para que se vea la union antes de confirmar con "Conectar seleccionados".
     private void seleccionarNodo(MapPoint punto) {
         if (seleccionPrincipal == null || seleccionPrincipal.equals(punto)) {
             seleccionPrincipal = punto;
@@ -105,7 +150,6 @@ public class MapController {
         mapPanel.limpiarSeleccion();
     }
 
-    // --- Botón "Agregar nodo (último clic)" ---
     public void agregarNodoUltimoClic() {
         if (ultimoClic == null) {
             JOptionPane.showMessageDialog(null, "Haz clic en el mapa primero.");
@@ -124,7 +168,6 @@ public class MapController {
         mapPanel.repaint();
     }
 
-    // --- Botón "Marcar como inicio" ---
     public void marcarComoInicio() {
         if (seleccionPrincipal == null) {
             JOptionPane.showMessageDialog(null, "Selecciona un nodo primero.");
@@ -134,7 +177,6 @@ public class MapController {
         mapPanel.marcarInicio(nodoInicio);
     }
 
-    // --- Botón "Marcar como destino" ---
     public void marcarComoDestino() {
         if (seleccionPrincipal == null) {
             JOptionPane.showMessageDialog(null, "Selecciona un nodo primero.");
@@ -144,7 +186,6 @@ public class MapController {
         mapPanel.marcarDestino(nodoDestino);
     }
 
-    // --- Botón "Conectar seleccionados" ---
     public void conectarSeleccionados() {
         if (seleccionPrincipal == null || seleccionSecundaria == null) {
             JOptionPane.showMessageDialog(null, "Selecciona dos nodos (clic en cada uno).");
@@ -153,9 +194,16 @@ public class MapController {
         mapGraph.addEdge(seleccionPrincipal, seleccionSecundaria);
         repository.save(mapGraph);
         mapPanel.repaint();
+
+        if (nodoInicio != null && nodoDestino != null) {
+            JOptionPane.showMessageDialog(null,
+                    "Conexion creada. Ya tenes inicio y destino marcados: presiona 'Play / Ejecutar'.");
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Conexion creada entre " + seleccionPrincipal.getId() + " y " + seleccionSecundaria.getId() + ".");
+        }
     }
 
-    // --- Botón "Eliminar nodo seleccionado" ---
     public void eliminarNodoSeleccionado() {
         if (seleccionPrincipal == null) {
             JOptionPane.showMessageDialog(null, "Selecciona un nodo primero.");
@@ -167,7 +215,6 @@ public class MapController {
         mapPanel.repaint();
     }
 
-    // --- Botón "Eliminar conexión seleccionada" ---
     public void eliminarConexionSeleccionada() {
         if (seleccionPrincipal == null || seleccionSecundaria == null) {
             JOptionPane.showMessageDialog(null, "Selecciona los dos nodos de la conexión.");
@@ -178,7 +225,6 @@ public class MapController {
         mapPanel.repaint();
     }
 
-    // --- Botón "Play / Ejecutar" ---
     public void ejecutarBusquedaConSeleccionActual(String algoritmo, VisualizationMode modo) {
         if (nodoInicio == null || nodoDestino == null) {
             JOptionPane.showMessageDialog(null, "Marca un nodo de inicio y uno de destino primero.");
@@ -195,10 +241,12 @@ public class MapController {
 
         mapPanel.limpiarRecorrido();
 
-        if (modo == VisualizationMode.EXPLORATION) {
+        if (resultado.getPath().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se encontro un camino entre los nodos seleccionados.");
+        } else if (modo == VisualizationMode.EXPLORATION) {
             animarExploracion(resultado);
         } else {
-            mapPanel.mostrarRutaFinal(resultado.getPath());
+            animarSoloRuta(resultado);
         }
 
         if (onResultUpdated != null) {
@@ -209,17 +257,35 @@ public class MapController {
         }
     }
 
+    // dibuja cada arista de exploracion una por una: se van uniendo nodo a nodo en tiempo real
     private void animarExploracion(PathResult<MapPoint> resultado) {
-        var visitados = new ArrayList<>(resultado.getVisitados());
+        var aristas = new ArrayList<>(resultado.getAristasExploracion());
         Timer timer = new Timer(300, null);
         int[] i = {0};
         timer.addActionListener(e -> {
-            if (i[0] < visitados.size()) {
-                mapPanel.agregarNodoVisitado(visitados.get(i[0]));
+            if (i[0] < aristas.size()) {
+                Edge<MapPoint> arista = aristas.get(i[0]);
+                mapPanel.agregarAristaVisitada(arista.getOrigen(), arista.getDestino());
                 i[0]++;
             } else {
                 timer.stop();
                 mapPanel.mostrarRutaFinal(resultado.getPath());
+            }
+        });
+        timer.start();
+    }
+
+    // modo FINAL_PATH: la ruta ganadora se va uniendo punto por punto, uno por uno
+    private void animarSoloRuta(PathResult<MapPoint> resultado) {
+        var puntos = new ArrayList<>(resultado.getPath());
+        Timer timer = new Timer(300, null);
+        int[] i = {0};
+        timer.addActionListener(e -> {
+            if (i[0] < puntos.size() - 1) {
+                mapPanel.agregarAristaRuta(puntos.get(i[0]), puntos.get(i[0] + 1));
+                i[0]++;
+            } else {
+                timer.stop();
             }
         });
         timer.start();

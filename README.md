@@ -31,4 +31,6 @@ Est. Michelle Marca:
 Est. Evelyn Mayancela:
 
 
+ahora que se hace ???
 
+![alt text](<Captura de pantalla 2026-07-18 095548.png>)

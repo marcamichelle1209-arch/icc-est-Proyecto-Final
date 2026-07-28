@@ -3,7 +3,6 @@ package structures.graphs;
 import java.util.List;
 
 public class CycleResult<T> {
-
     private final boolean hasCycle;
     private final List<T> cycle;
 

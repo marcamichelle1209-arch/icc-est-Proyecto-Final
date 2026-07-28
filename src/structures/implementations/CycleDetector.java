@@ -38,7 +38,7 @@ public class CycleDetector<T> {
         for (Node<T> vecino : graph.getGraph().get(actual)) {
             if (enPila.contains(vecino)) {
                 ciclo.add(vecino.getData());
-                return true; // arista hacia un nodo ya en la pila de recursion => ciclo
+                return true;
             }
             if (!visitados.contains(vecino)) {
                 if (explorar(graph, vecino, visitados, enPila, ciclo)) {

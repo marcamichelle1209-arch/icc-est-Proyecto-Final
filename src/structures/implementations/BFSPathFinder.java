@@ -1,13 +1,16 @@
 package structures.implementations;
 
+import structures.graphs.Edge;
 import structures.graphs.Graph;
 import structures.graphs.PathFinder;
 import structures.graphs.PathResult;
 import structures.node.Node;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
@@ -28,6 +31,7 @@ public class BFSPathFinder<T> implements PathFinder<T> {
         Queue<Node<T>> cola = new LinkedList<>();
         Map<Node<T>, Node<T>> predecesores = new LinkedHashMap<>();
         Set<Node<T>> nodosVisitados = new LinkedHashSet<>();
+        List<Edge<T>> aristas = new ArrayList<>();
 
         cola.add(nodoInicio);
         nodosVisitados.add(nodoInicio);
@@ -47,16 +51,16 @@ public class BFSPathFinder<T> implements PathFinder<T> {
                 if (!nodosVisitados.contains(vecino)) {
                     nodosVisitados.add(vecino);
                     predecesores.put(vecino, actual);
+                    aristas.add(new Edge<>(actual.getData(), vecino.getData()));
                     cola.add(vecino);
                 }
             }
         }
 
         if (!encontrado) {
-            return PathResult.sinRuta(visitados);
+            return new PathResult<>(visitados, new LinkedHashSet<>(), aristas);
         }
 
-        // Reconstruir la ruta desde el destino hasta el inicio usando predecesores
         Set<T> path = new LinkedHashSet<>();
         LinkedList<T> pathInverso = new LinkedList<>();
         Node<T> actual = nodoFin;
@@ -67,7 +71,7 @@ public class BFSPathFinder<T> implements PathFinder<T> {
         }
         path.addAll(pathInverso);
 
-        return new PathResult<>(visitados, path);
+        return new PathResult<>(visitados, path, aristas);
     }
 
     private Node<T> buscarNodo(Graph<T> graph, T data) {

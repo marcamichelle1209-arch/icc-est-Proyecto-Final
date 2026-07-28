@@ -3,7 +3,6 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -26,7 +25,6 @@ import models.VisualizationMode;
 import persistence.FileGraphRepository;
 import persistence.GraphRepository;
 import structures.graphs.Graph;
-
 public class MainFrame extends JFrame {
 
     private JComboBox<String> comboAlgoritmo;
@@ -36,7 +34,7 @@ public class MainFrame extends JFrame {
     private JLabel lblResultado;
 
     public MainFrame() {
-        setTitle("Mapa de Calles - BFS / DFS");
+        setTitle("--- Mapa de Calles ---");
         setSize(1100, 750);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -45,9 +43,10 @@ public class MainFrame extends JFrame {
         GraphRepository repository = new FileGraphRepository("config/mapa.json");
         Graph<MapPoint> mGraph = repository.load();
 
-        mapPanel = new MapPanel("resources/maps/map.png", mGraph);
+        mapPanel = new MapPanel("/resources/maps/map.png", mGraph);
         controller = new MapController(mGraph, mapPanel, repository);
         mapPanel.setController(controller);
+        controller.sembrarNodosSiVacio();
 
         controller.setOnResultUpdated(this::actualizarPanelResultados);
         controller.setOnSelectionUpdated(this::actualizarSeleccionLabel);
@@ -191,8 +190,6 @@ public class MainFrame extends JFrame {
 
     private void mostrarMenuFlotanteSiAplica(MouseEvent e, JPopupMenu menuFlotante) {
         if (e.isPopupTrigger()) {
-            // registra el punto del clic derecho como "último clic",
-            // así "Agregar nodo aquí" agrega justo donde se abrió el menú
             controller.onMapClick(e.getX(), e.getY());
             menuFlotante.show(e.getComponent(), e.getX(), e.getY());
         }
