@@ -3,7 +3,6 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -12,14 +11,12 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import controllers.MapController;
 import models.MapPoint;
 import models.VisualizationMode;
 import persistence.FileGraphRepository;
 import persistence.GraphRepository;
 import structures.graphs.Graph;
-
 public class MainFrame extends JFrame {
 
     private JComboBox<String> comboAlgoritmo;
@@ -29,7 +26,7 @@ public class MainFrame extends JFrame {
     private JLabel lblResultado;
 
     public MainFrame() {
-        setTitle("Mapa de Calles - BFS / DFS");
+        setTitle("--- Mapa de Calles ---");
         setSize(1100, 750);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -123,3 +120,5 @@ public class MainFrame extends JFrame {
     }
 
 }
+
+
