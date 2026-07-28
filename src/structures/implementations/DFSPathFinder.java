@@ -1,4 +1,4 @@
-package structures.graphs.implementations;
+package structures.implementations;
 
 import structures.graphs.Graph;
 import structures.graphs.PathFinder;
