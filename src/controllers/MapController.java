@@ -23,6 +23,7 @@ public class MapController {
     private final MapPanel mapPanel;
     private final GraphRepository repository;
 
+    private boolean agregarNodo = false;
     private MapPoint ultimoClic = null;
     private MapPoint seleccionPrincipal = null;
     private MapPoint seleccionSecundaria = null;
@@ -52,6 +53,7 @@ public class MapController {
 
     // --- Activar modo agregar nodo ---
     public void activarAgregarNodo() {
+        agregarNodo = true;
         cancelarSeleccion();
         JOptionPane.showMessageDialog(null, "Modo activado: haz clic en el mapa para ubicar un nodo.");
     }
