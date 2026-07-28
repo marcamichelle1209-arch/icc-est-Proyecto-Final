@@ -47,15 +47,31 @@ public class FileGraphRepository implements GraphRepository {
                 if (seccion.equals("NODOS")) {
                     // formato: id,x,y
                     String[] partes = linea.split(",");
+                    if (partes.length != 3) {
+                        System.err.println("Linea de nodo invalida, se ignora: " + linea);
+                        continue;
+                    }
                     String id = partes[0].trim();
-                    int x = Integer.parseInt(partes[1].trim());
-                    int y = Integer.parseInt(partes[2].trim());
-                    graph.add(new MapPoint(id, x, y));
+                    if (id.isEmpty()) {
+                        System.err.println("Nodo sin id, se ignora: " + linea);
+                        continue;
+                    }
+                    try {
+                        int x = Integer.parseInt(partes[1].trim());
+                        int y = Integer.parseInt(partes[2].trim());
+                        graph.add(new MapPoint(id, x, y));
+                    } catch (NumberFormatException ex) {
+                        System.err.println("Coordenadas invalidas, se ignora: " + linea);
+                    }
                 }
 
                 if (seccion.equals("ARISTAS")) {
                     // formato: idOrigen,idDestino,bidireccional(true/false)
                     String[] partes = linea.split(",");
+                    if (partes.length != 3) {
+                        System.err.println("Linea de arista invalida, se ignora: " + linea);
+                        continue;
+                    }
                     String idOrigen = partes[0].trim();
                     String idDestino = partes[1].trim();
                     boolean bidireccional = Boolean.parseBoolean(partes[2].trim());
@@ -69,6 +85,8 @@ public class FileGraphRepository implements GraphRepository {
                         } else {
                             graph.addEdgeUni(origen, destino);
                         }
+                    } else {
+                        System.err.println("Arista referencia nodo inexistente, se ignora: " + linea);
                     }
                 }
             }
@@ -83,7 +101,8 @@ public class FileGraphRepository implements GraphRepository {
     public void save(Graph<MapPoint> graph) {
         try {
             File archivo = new File(filePath);
-            archivo.getParentFile().mkdirs(); // crea la carpeta config/ si no existe
+            File carpeta = archivo.getParentFile();
+            if (carpeta != null) carpeta.mkdirs(); // crea la carpeta config/ si no existe
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo))) {
                 writer.write("[NODOS]");

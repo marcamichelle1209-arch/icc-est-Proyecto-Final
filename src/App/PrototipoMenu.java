@@ -1,30 +1,45 @@
 package App;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
-import views.MainFrame;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class PrototipoMenu extends JFrame {
-
-    public PrototipoMenu() {
-        setTitle("Menú Principal - Mapa de Rutas");
-        setSize(400, 300);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        JButton btnIniciar = new JButton("Iniciar Mapa");
-        btnIniciar.addActionListener(e -> abrirMapa());
-
+// Prototipo aislado del menu flotante, sin depender del resto del proyecto
+public class PrototipoMenu {
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("Prototipo Menu Flotante");
         JPanel panel = new JPanel();
-        panel.add(btnIniciar);
-        add(panel);
-    }
+        frame.add(panel);
+        frame.setSize(600, 400);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    private void abrirMapa() {
-        MainFrame mainFrame = new MainFrame();
-        mainFrame.setVisible(true);
-        this.dispose(); // cierra el menú al abrir el mapa
+        JPopupMenu menuFlotante = new JPopupMenu();
+        JMenuItem itemAnadir = new JMenuItem("Añadir Nodo");
+        JMenuItem itemBorrar = new JMenuItem("Borrar Nodo");
+        menuFlotante.add(itemAnadir);
+        menuFlotante.addSeparator();
+        menuFlotante.add(itemBorrar);
+
+        itemAnadir.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Nodo añadido"));
+        itemBorrar.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Nodo borrado"));
+
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.isPopupTrigger()) menuFlotante.show(e.getComponent(), e.getX(), e.getY());
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) menuFlotante.show(e.getComponent(), e.getX(), e.getY());
+            }
+        });
+
+        frame.setVisible(true);
     }
 }
