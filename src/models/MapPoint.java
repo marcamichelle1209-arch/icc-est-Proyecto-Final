@@ -1,5 +1,7 @@
 package models;
 
+import java.util.Objects;
+
 public class MapPoint {
     private String id;
     private int x;
@@ -31,7 +33,19 @@ public class MapPoint {
     public String toString() {
         return "MapPoint [id=" + id + ", x=" + x + ", y=" + y + "]";
     }
+     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
 
+        MapPoint otro = (MapPoint) obj;
+        return Objects.equals(this.id, otro.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
+    }
     
 
 }
