@@ -1,5 +1,5 @@
 package structures.implementations;
 
-public class TopologicalSorter {
+public class TopologicalResult {
     
 }
