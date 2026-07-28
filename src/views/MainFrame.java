@@ -3,6 +3,8 @@ package views;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.io.File;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -33,9 +35,9 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
 
         GraphRepository repository = new FileGraphRepository("config/mapa.json");
-        Graph<MapPoint> mGraph = repository.load();
+        Graph<MapPoint> mGraph = repository.load(); 
 
-        mapPanel = new MapPanel("resources/maps/map.png", mGraph);
+        mapPanel = new MapPanel("src/resources/maps/barcelonaMap.jpeg", mGraph);
         controller = new MapController(mGraph, mapPanel, repository);
         mapPanel.setController(controller);
 

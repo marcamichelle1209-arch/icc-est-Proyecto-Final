@@ -40,7 +40,7 @@ public class MapPanel extends JPanel {
         this.mapGraph = mapGraph;
 
         try {
-            backgroundImage = ImageIO.read(new File(imagePath));
+            backgroundImage = ImageIO.read(getClass().getResourceAsStream("/resources/maps/barcelonaMap.jpeg"));
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "No se pudo cargar el mapa: " + imagePath);
         }
@@ -59,9 +59,8 @@ public class MapPanel extends JPanel {
         this.controller = controller;
     }
 
-    // --- Métodos que llama MapController ---
-
-    public void marcarSeleccionado(MapPoint principal, MapPoint secundaria) {
+    // Métodos que llama MapController 
+        public void marcarSeleccionado(MapPoint principal, MapPoint secundaria) {
         this.seleccionPrincipal = principal;
         this.seleccionSecundaria = secundaria;
         repaint();
@@ -99,7 +98,7 @@ public class MapPanel extends JPanel {
         repaint();
     }
 
-    // --- Dibujo ---
+    // --- Dibujo ---   
 
     @Override
     protected void paintComponent(Graphics g) {
