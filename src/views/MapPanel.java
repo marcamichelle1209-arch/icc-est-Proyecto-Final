@@ -148,6 +148,12 @@ public class MapPanel extends JPanel {
     }
 
     // --- Dibujo ---   
+    // marca los puntos de la ruta ganadora SIN reconstruir las lineas ya dibujadas
+    // (se usa al terminar la animacion progresiva, para no "resetear" el efecto)
+    public void marcarPuntosRuta(Set<MapPoint> ruta) {
+        this.puntosRutaFinal = ruta;
+        repaint();
+    }
 
     @Override
     protected void paintComponent(Graphics g) {

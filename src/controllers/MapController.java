@@ -269,7 +269,7 @@ public class MapController {
                 i[0]++;
             } else {
                 timer.stop();
-                mapPanel.mostrarRutaFinal(resultado.getPath());
+                animarSoloRuta(resultado);
             }
         });
         timer.start();
@@ -286,6 +286,7 @@ public class MapController {
                 i[0]++;
             } else {
                 timer.stop();
+                mapPanel.marcarPuntosRuta(resultado.getPath());
             }
         });
         timer.start();
