@@ -1,12 +1,5 @@
 package structures.node;
 
-<<<<<<< HEAD
-public class Node<T> {
-
-    
-    
-}
-=======
 import java.util.Objects;
 
 public class Node<T> {
@@ -43,4 +36,3 @@ public class Node<T> {
         return data != null ? data.toString() : "null";
     }
 }
->>>>>>> c7a6e64fd8ed285d36c12e504442c2acc3998592
