@@ -121,4 +121,10 @@ public class MainFrame extends JFrame {
     private void actualizarSeleccionLabel(String principal, String secundaria) {
         lblResultado.setText("<html>Selección actual: " + principal + " | secundaria: " + secundaria + "</html>");
     }
+
+
+
+
+
+    
 }

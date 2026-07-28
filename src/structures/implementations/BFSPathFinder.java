@@ -17,11 +17,13 @@ public class BFSPathFinder<T> implements PathFinder<T> {
     @Override
     public PathResult<T> find(Graph<T> graph, T start, T end) {
         Node<T> nodoInicio = buscarNodo(graph, start);
+        
         Node<T> nodoFin = buscarNodo(graph, end);
 
         Set<T> visitados = new LinkedHashSet<>();
 
         if (nodoInicio == null || nodoFin == null) {
+
             return PathResult.sinRuta(visitados);
         }
 
@@ -53,6 +55,7 @@ public class BFSPathFinder<T> implements PathFinder<T> {
         }
 
         if (!encontrado) {
+
             return PathResult.sinRuta(visitados);
         }
 
