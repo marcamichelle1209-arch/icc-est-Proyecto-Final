@@ -135,6 +135,7 @@ public class MainFrame extends JFrame {
     // --- Menú flotante (clic derecho sobre el mapa) ---
     // Agregado como complemento visual: hace exactamente lo mismo que los botones
     // de la barra lateral, solo que aparece flotando junto al cursor.
+    
     private void agregarMenuFlotante() {
         JPopupMenu menuFlotante = new JPopupMenu();
         menuFlotante.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 1));
