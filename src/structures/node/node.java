@@ -1,5 +1,5 @@
 package structures.node;
 
-public class Node {
+public class Node<T> {
     
 }
