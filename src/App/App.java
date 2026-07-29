@@ -1,14 +1,13 @@
 package App;
 
 import javax.swing.SwingUtilities;
-
+import views.MainFrame;
 
 public class App {
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         SwingUtilities.invokeLater(() -> {
-            PrototipoMenu menu = new PrototipoMenu();
-            menu.setVisible(true);
+            MainFrame frame = new MainFrame();
+            frame.setVisible(true);
         });
     }
 }

@@ -1,11 +1,14 @@
 package structures.implementations;
 
+import structures.graphs.Edge;
 import structures.graphs.Graph;
 import structures.graphs.PathFinder;
 import structures.graphs.PathResult;
 import structures.node.Node;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class DFSPathFinder<T> implements PathFinder<T> {
@@ -23,38 +26,39 @@ public class DFSPathFinder<T> implements PathFinder<T> {
 
         Set<Node<T>> nodosVisitados = new LinkedHashSet<>();
         LinkedHashSet<T> rutaActual = new LinkedHashSet<>();
+        List<Edge<T>> aristas = new ArrayList<>();
 
-        boolean encontrado = explorar(graph, nodoInicio, nodoFin, nodosVisitados, visitados, rutaActual);
+        boolean encontrado = explorar(graph, nodoInicio, nodoFin, nodosVisitados, visitados, rutaActual, aristas);
 
         if (!encontrado) {
-            return PathResult.sinRuta(visitados);
+            return new PathResult<>(visitados, new LinkedHashSet<>(), aristas);
         }
 
-        return new PathResult<>(visitados, rutaActual);
+        return new PathResult<>(visitados, rutaActual, aristas);
     }
 
-    // Recursivo: explora en profundidad, aplica retroceso si la rama no lleva al destino
     private boolean explorar(Graph<T> graph, Node<T> actual, Node<T> destino,
-                              Set<Node<T>> nodosVisitados, Set<T> visitados, LinkedHashSet<T> rutaActual) {
+                              Set<Node<T>> nodosVisitados, Set<T> visitados,
+                              LinkedHashSet<T> rutaActual, List<Edge<T>> aristas) {
 
         nodosVisitados.add(actual);
         visitados.add(actual.getData());
         rutaActual.add(actual.getData());
 
         if (actual.equals(destino)) {
-            return true; // ruta encontrada
+            return true;
         }
 
         for (Node<T> vecino : graph.getGraph().get(actual)) {
             if (!nodosVisitados.contains(vecino)) {
-                boolean encontrado = explorar(graph, vecino, destino, nodosVisitados, visitados, rutaActual);
+                aristas.add(new Edge<>(actual.getData(), vecino.getData()));
+                boolean encontrado = explorar(graph, vecino, destino, nodosVisitados, visitados, rutaActual, aristas);
                 if (encontrado) {
-                    return true; // propaga el éxito hacia arriba sin seguir buscando
+                    return true;
                 }
             }
         }
 
-        // Esta rama no llevó al destino: retroceso (quita el nodo actual de la ruta)
         rutaActual.remove(actual.getData());
         return false;
     }

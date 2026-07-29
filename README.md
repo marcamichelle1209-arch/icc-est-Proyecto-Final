@@ -1,29 +1,26 @@
 # **Informe Del Proyecto: Implementación y Visualización de rutas en un mapa de calles mediante BFS y DFS**
 
 
+## _**Nombre de Integrantes:**_
 
-## _Nombre de Integrantes:_
-
-- Nataly Jiménez
+- Nataly Jiménez Salazar 
 - Evelyn Mayancela
 - Michelle Marca
 
-## Fecha Inicio:
-17/17/2026
+## **Fecha Inicio:** 17/17/2026
 
-## Fecha Entrega:
-27/07/2026
+## **Fecha Entrega:** 29/07/2026
 
 ## _**Objetivo General:**_
 
-Diseñar e implementar un sistema en Java que permita representar un mapa urbano mediante un grafo de nodos y
-encontrar el mejor camino entre dos puntos utilizando los algoritmos BFS y DFS, aplicando los principios de la
-programación orientada a objetos y las estructuras de datos estudiadas en la asignatura.
+_Diseñar e implementar un sistema en Java que permita representar un mapa urbano mediante un grafo de nodos y
+encontrar el mejor camino entre dos puntos utilizando los algoritmos ``BFS`` y ``DFS``, aplicando los principios de la
+programación orientada a objetos y las estructuras de datos estudiadas en la asignatura._
 
 ## **_Objetivos Específicos:_**
 1. Modelar los elementos del mapa (puntos, nodos y conexiones) mediante clases y estructuras de datos
 adecuadas.
-2. Implementar los algoritmos de búsqueda BFS y DFS sobre una estructura de grafo genérica.
+2. Implementar los algoritmos de búsqueda ``BFS`` y ``DFS`` sobre una estructura de grafo genérica.
 3. Permitir la creación interactiva de nodos y conexiones (unidireccionales o bidireccionales) sobre la imagen
 de un mapa.
 4. Desarrollar una interfaz gráfica que permita visualizar el mapa, los nodos, las conexiones y el camino
@@ -32,19 +29,25 @@ resultante.
 
 ## Descripción de los métodos 
 
-DFS PathFinder: 
-El algoritmo DFS explora el grafo avanzando lo más posible por una rama antes de retroceder, utilizando una estructura de pila (LIFO) o recursividad. A diferencia de BFS, DFS no garantiza el camino más corto, pero resulta útil
-para explorar todas las rutas posibles o verificar la conectividad entre nodos.
+``DFS PathFinder:`` 
+El algoritmo ``DFS`` explora el grafo avanzando lo más posible por una rama antes de retroceder, utilizando una estructura de pila ``(LIFO)`` o recursividad. A diferencia de BFS, DFS no garantiza el camino más corto, pero resulta útil para explorar todas las rutas posibles o verificar la conectividad entre nodos.
 
 
-BFS PathFinder: 
-El algoritmo BFS explora el grafo nivel por nivel, visitando primero todos los nodos vecinos del nodo actual antes de
-avanzar a los siguientes niveles. Utiliza una estructura de cola (FIFO) para gestionar el orden de visita. Cuando todas
-las conexiones tienen el mismo costo, BFS garantiza encontrar el camino más corto en número de saltos entre el nodo de origen y el nodo de destino.
+``BFS PathFinder:`` 
+El algoritmo ``BFS`` explora el grafo nivel por nivel, visitando primero todos los nodos vecinos del nodo actual antes de avanzar a los siguientes niveles. Utiliza una estructura de cola ``(FIFO)`` para gestionar el orden de visita. Cuando todas las conexiones tienen el mismo costo, BFS garantiza encontrar el camino más corto en número de saltos entre el nodo de origen y el nodo de destino.
  
 ## **Resultados obtenidos:**
 
-*Tabla #1: Comparación de BFS y DFS*
+*Tabla #1: Comparación de ``BFS`` y ``DFS``*
+
+| Caso | Algoritmo | Inicio | Destino | Nodos Visitados | Cantidad Aristas | Tiempo |
+| ---- |-----------|--------|---------|-----------------|------------------|--------|
+|1     |      g    |        |         |                 |                  |        |
+|1     |           |        |         |                 |                  |        |
+|2     |           |        |         |                 |                  |        | 
+|2     |           |        |         |                 |                  |        |       
+|3     |           |        |         |                 |                  |        |
+|3     |
 
 
 ## **Ánalisis Requerido: Preguntas hechas en base a las pruebas:**
