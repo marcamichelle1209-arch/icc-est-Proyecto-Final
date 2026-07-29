@@ -12,13 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import controllers.MapController;
 import models.MapPoint;
@@ -121,12 +115,12 @@ public class MainFrame extends JFrame {
         controller.ejecutarBusquedaConSeleccionActual(algoritmo, modo);
     }
 
-    private void actualizarPanelResultados(String algoritmo, long tiempoMs, int visitados,
+    private void actualizarPanelResultados(String algoritmo, double tiempoUs, int visitados,
                                             String ordenVisitados, String rutaEncontrada) {
         lblResultado.setText(String.format(
-                "<html>Algoritmo: %s | Tiempo: %d ms | Visitados: %d<br>" +
+                "<html>Algoritmo: %s | Tiempo: %.3f ms | Visitados: %d<br>" +
                 "Orden visitados: %s<br>Ruta encontrada: %s</html>",
-                algoritmo, tiempoMs, visitados, ordenVisitados, rutaEncontrada));
+                algoritmo, tiempoUs, visitados, ordenVisitados, rutaEncontrada));
     }
 
     private void actualizarSeleccionLabel(String principal, String secundaria) {

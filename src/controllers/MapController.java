@@ -20,7 +20,7 @@ import java.util.function.BiConsumer;
 
 public class MapController {
 
-    private final Graph<MapPoint> mapGraph;
+  private final Graph<MapPoint> mapGraph;
     private final MapPanel mapPanel;
     private final GraphRepository repository;
 
@@ -35,7 +35,7 @@ public class MapController {
     private BiConsumer<String, String> onSelectionUpdated;
 
     public interface ResultCallback {
-        void onResult(String algoritmo, long tiempoMs, int visitados, String orden, String ruta);
+        void onResult(String algoritmo, double tiempoMs, int visitados, String orden, String ruta);
     }
 
     public MapController(Graph<MapPoint> mapGraph, MapPanel mapPanel, GraphRepository repository) {
@@ -240,7 +240,7 @@ public class MapController {
 
         long t0 = System.nanoTime();
         PathResult<MapPoint> resultado = finder.find(mapGraph, nodoInicio, nodoDestino);
-        long tiempoMs = (System.nanoTime() - t0) / 1_000_000;
+        double tiempoMs = (System.nanoTime() - t0) / 1_000_000.0;
 
         mapPanel.limpiarRecorrido();
 
