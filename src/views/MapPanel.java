@@ -1,12 +1,10 @@
 package views;
-
 import controllers.MapController;
 import models.MapPoint;
 import structures.graphs.Graph;
 import structures.node.Node;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BasicStroke;
 import java.awt.Color;
