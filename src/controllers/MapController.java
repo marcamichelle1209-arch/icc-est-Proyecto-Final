@@ -20,7 +20,7 @@ import java.util.function.BiConsumer;
 
 public class MapController {
 
-    private final Graph<MapPoint> mapGraph;
+  private final Graph<MapPoint> mapGraph;
     private final MapPanel mapPanel;
     private final GraphRepository repository;
 
@@ -35,7 +35,7 @@ public class MapController {
     private BiConsumer<String, String> onSelectionUpdated;
 
     public interface ResultCallback {
-        void onResult(String algoritmo, long tiempoMs, int visitados, String orden, String ruta);
+        void onResult(String algoritmo, double tiempoMs, int visitados, String orden, String ruta);
     }
 
     public MapController(Graph<MapPoint> mapGraph, MapPanel mapPanel, GraphRepository repository) {
@@ -191,23 +191,21 @@ public class MapController {
         mapPanel.marcarDestino(nodoDestino);
     }
 
-    public void conectarSeleccionados() {
-        if (seleccionPrincipal == null || seleccionSecundaria == null) {
-            JOptionPane.showMessageDialog(null, "Selecciona dos nodos (clic en cada uno).");
-            return;
-        }
-        mapGraph.addEdge(seleccionPrincipal, seleccionSecundaria);
-        repository.save(mapGraph);
-        mapPanel.repaint();
-
-        if (nodoInicio != null && nodoDestino != null) {
-            JOptionPane.showMessageDialog(null,
-                    "Conexion creada. Ya tenes inicio y destino marcados: presiona 'Play / Ejecutar'.");
-        } else {
-            JOptionPane.showMessageDialog(null,
-                    "Conexion creada entre " + seleccionPrincipal.getId() + " y " + seleccionSecundaria.getId() + ".");
-        }
+  public void conectarSeleccionados(boolean bidireccional) {
+    if (seleccionPrincipal == null || seleccionSecundaria == null) {
+        JOptionPane.showMessageDialog(null, "Selecciona dos nodos (clic en cada uno).");
+        return;
     }
+
+    if (bidireccional) {
+        mapGraph.addEdge(seleccionPrincipal, seleccionSecundaria);
+    } else {
+        mapGraph.addEdgeUni(seleccionPrincipal, seleccionSecundaria);
+    }
+
+    repository.save(mapGraph);
+    mapPanel.repaint();
+}
 
     public void eliminarNodoSeleccionado() {
         if (seleccionPrincipal == null) {
@@ -242,7 +240,7 @@ public class MapController {
 
         long t0 = System.nanoTime();
         PathResult<MapPoint> resultado = finder.find(mapGraph, nodoInicio, nodoDestino);
-        long tiempoMs = (System.nanoTime() - t0) / 1_000_000;
+        double tiempoMs = (System.nanoTime() - t0) / 1_000_000.0;
 
         mapPanel.limpiarRecorrido();
 

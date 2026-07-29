@@ -99,33 +99,31 @@ No, los tiempos son de 0 a 4 ms, prácticamente inapreciables porque el grafo es
 Cuando el destino estaba "cerca" en términos de niveles de conexión (los Casos Nro. 1 y Nro. 3), BFS lo encontró casi de inmediato mientras DFS se desviaba por otras calles. Cuando el destino estaba en una zona más densamente conectada cerca del punto de inicio (el Caso 2), la diferencia entre ambos algoritmos se estabilizó, o sea que fue más fácil ver como trabajaban.
 
 - ``¿Qué ventajas aporta separar la lógica del algoritmo de la visualización?``
-Separar la lógica de búsqueda: PathFinder, BFSPathFinder, DFSPathFinder de la interfaz gráfica: MapPanel y MainFrame, permite que cada algoritmo se pueda probar, modificar o reemplazar sin tocar el código que dibuja en el mapa, por ejemplo, para agregar un nuevo algoritmo de búsqueda, solo tendríamos que crear una nueva clase que implemente la interfaz ``PathFinder``, sin modificar ``MapPanel``. Además, esta separación facilita las pruebas: se puede ejecutar y verificar la lógica de un algoritmo directamente sobre el ``Graph``, también hace el código más legible y mantenible, ya que cada clase tiene asignada una única responsabilidad.
+Separar la lógica de búsqueda: PathFinder, BFSPathFinder, DFSPathFinder de la interfaz gráfica: MapPanel y MainFrame, permite que cada algoritmo se pueda probar, modificar o reemplazar sin tocar el código que dibuja en el mapa, por ejemplo, para agregar un nuevo algoritmo de búsqueda, solo tendríamos que crear una nueva clase que implemente la interfaz ``PathFinder``. Además, esta separación facilita las pruebas: se puede ejecutar y verificar la lógica de un algoritmo sobre el ``Graph``, también hace el código más legible y mantenible, ya que cada clase tiene asignada una única responsabilidad.
 
 - ``¿Qué mejoras podrían implementarse para trabajar con calles ponderadas?``
 Actualmente las conexiones del grafo no tienen un costo, solo indican si existe conexión uni o bidireccionales. Para trabajar con calles ponderadas, representando distancia real, tiempo de recorrido o tráfico, se necesitaría:
-    1. Agregar un atributo de peso a la clase Edge.
+    1. Agregar un atributo de peso a la clase ``Edge``.
 
     2. Modificar ``Graph`` para almacenar y mostrar ese peso al construir o consultar las conexiones.
 
-    3. Reemplazar o complementar ``BFS/DFS``, que no consideran pesos, con un algoritmo que sí los use como A* ya que ``BFS`` solo garantiza el camino más corto en número de saltos, no en costo real.
+    3. Reemplazar o complementar ``BFS/DFS``, que no consideran pesos, con un algoritmo que sí los use como ``A*`` ya que ``BFS`` solo garantiza el camino más corto en número de saltos, no en costo real.
     4. Actualizar la interfaz gráfica para permitir ingresar el peso al crear una conexión, por ejemplo, un txtField, y opcionalmente mostrarlo visualmente sobre el mapa, ya sea con el grosor o color de línea según el peso.  
 
 ## Conclusiones Individuales          
 
-Est. Nataly Jiménez Salazar: La arquitectura MVC facilitó la separación de responsabilidades entre la lógica de búsqueda de caminos, el manejo de datos del mapa y la interfaz gráfica, favoreciendo el mantenimiento y la escalabilidad del
+``Est. Nataly Jiménez Salazar``: El modelo ``MVC`` facilitó la separación de responsabilidades entre la lógica de búsqueda de caminos, el manejo de datos del mapa y la interfaz gráfica, favoreciendo el mantenimiento y la escalabilidad del
 proyecto.
 
 
-Est. Michelle Marca: Los algoritmos BFS y DFS, aunque comparten el objetivo de recorrer un grafo, ofrecen resultados distintos
-según el criterio de exploración utilizado, lo que confirma la importancia de elegir el algoritmo adecuado
-según el problema a resolver.
+``Est. Michelle Marca``: La representación de un mapa urbano como un grafo de nodos y conexiones permite aplicar de forma práctica los conceptos teóricos de estructuras de datos no lineales
 
-Est. Evelyn Mayancela:
+``Est. Evelyn Mayancela:`` ``BFS`` encuentra siempre el camino más corto en saltos, mientras que ``DFS``, al profundizar por una sola rama, visitó muchos más nodos antes de llegar al destino. Separar los algoritmos de la interfaz permitió animar y visualizar claramente esta diferencia.
 
 ## Recomendaciones: 
 
 - Incorporar pesos en las conexiones para permitir, en trabajos futuros, la implementación de algoritmos
-como Dijkstra o A* y comparar sus resultados frente a BFS y DFS.
+como ``Dijkstra`` o ``A*`` y comparar sus resultados frente a ``BFS`` y ``DFS``.
 - Agregar validaciones visuales que impidan crear conexiones duplicadas o nodos superpuestos sobre el
 mapa.
 

@@ -5,6 +5,10 @@ import structures.graphs.Graph;
 import structures.node.Node;
 
 import javax.imageio.ImageIO;
+<<<<<<< HEAD
+=======
+
+>>>>>>> eeede74dc3ba8423109374ba284c0350e47be956
 import javax.swing.JPanel;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -177,17 +181,25 @@ public class MapPanel extends JPanel {
     }
 
     // calles del grafo tal como fueron definidas, en celeste brillante
-    private void dibujarAristasGrafo(Graphics2D g2) {
-        g2.setColor(new Color(0, 200, 255));
-        g2.setStroke(new BasicStroke(3));
-        for (Node<MapPoint> nodo : mapGraph.getNodes()) {
-            MapPoint origen = nodo.getData();
-            for (Node<MapPoint> vecino : mapGraph.getGraph().get(nodo)) {
-                MapPoint destino = vecino.getData();
-                g2.drawLine(origen.getX(), origen.getY(), destino.getX(), destino.getY());
+  private void dibujarAristasGrafo(Graphics2D g2) {
+    g2.setStroke(new BasicStroke(3));
+    for (Node<MapPoint> nodo : mapGraph.getNodes()) {
+        MapPoint origen = nodo.getData();
+        for (Node<MapPoint> vecino : mapGraph.getGraph().get(nodo)) {
+            MapPoint destino = vecino.getData();
+
+            boolean esBidireccional = mapGraph.getGraph().get(vecino).contains(nodo);
+
+            if (esBidireccional) {
+                g2.setColor(new Color(0, 200, 255)); // celeste = bidireccional
+            } else {
+                g2.setColor(new Color(255, 100, 100)); // rojo claro = un solo sentido
             }
+
+            g2.drawLine(origen.getX(), origen.getY(), destino.getX(), destino.getY());
         }
     }
+}
 
     private void dibujarAristasExploracion(Graphics2D g2) {
         g2.setColor(new Color(255, 165, 0));
