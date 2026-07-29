@@ -27,9 +27,9 @@ de un mapa.
 resultante.
 5. Persistir la información del grafo generado para que pueda reutilizarse en sesiones posteriores.
 
-## Descripción de los métodos 
+## Descripción de los métodos
 
-![Descripción de la imagen](src/resources/maps/BFS-DFS.png)
+![Descripción de la imagen](src\resources\maps\BFS-DFS.png)
 
 ``DFS PathFinder:`` 
 El algoritmo ``DFS`` explora el grafo avanzando lo más posible por una rama antes de retroceder utilizando ``(LIFO)`` o recursividad. A diferencia de ``BFS``, ``DFS`` no garantiza el camino más corto, pero resulta útil para explorar todas las rutas posibles o verificar la conexión entre nodos.
@@ -51,22 +51,22 @@ El algoritmo ``BFS`` explora el grafo nivel por nivel, visitando primero todos l
 |3     |      BFS  |xi      | haya    |    14           |  2               | 2 ms   |
 |3     |    DFS    |xi      | haya    |    23           |  15              | 0 ms   |
 
-![BFS_Caso1](src\resources\BFS_Caso1.png)
+![BFS_Caso1](src/resources/BFS_Caso1.png)
 _Figura 1. Exploración BFS: Caso 1 (axa a loni)_
 
-![DFS_Caso1](src\resources\DFS_Caso1.png)
+![DFS_Caso1](src/resources/DFS_Caso1.png)
 _Figura 2. Exploración DFS: Caso 1 (axa a loni)_
 
-![BFS_Caso2](src\resources\BFS_Caso2.jpeg)
+![BFS_Caso2](src/resources/BFS_Caso2.jpeg)
 _Figura 3. Exploración BFS: Caso 2 (A007 a A001)_
 
-![DFS_Caso2](src\resources\DFS_Caso2.jpeg)
+![DFS_Caso2](src/resources/DFS_Caso2.jpeg)
 _Figura 4. Exploración DFS: Caso 2 (A007 a A001)_
 
-![BFS_Caso3](src\resources\BFS_Caso3.jpeg)
+![BFS_Caso3](src/resources/BFS_Caso3.jpeg)
 _Figura 5. Exploración BFS — Caso 3 (xi a haya)_
 
-![DFS_Caso3](src\resources\DFS_Caso3.jpeg)
+![DFS_Caso3](src/resources/DFS_Caso3.jpeg)
 _Figura 6. Exploración DFS — Caso 3 (xi a haya)_
 
 ## **Ánalisis Requerido: Preguntas hechas en base a las pruebas:**
