@@ -70,6 +70,6 @@ práctica los conceptos teóricos de estructuras de datos no lineales.
 
 Est. Michelle Marca: 
 
-Est. Evelyn Mayancela:
+Est. Evelyn Mayancela:BFS encuentra siempre el camino más corto en saltos, mientras que DFS, al profundizar por una sola rama, visitó muchos más nodos antes de llegar al destino. Separar los algoritmos de la interfaz permitió animar y visualizar claramente esta diferencia.
 
 
