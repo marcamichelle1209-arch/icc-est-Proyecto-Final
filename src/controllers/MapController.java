@@ -176,6 +176,10 @@ public class MapController {
         }
         nodoInicio = seleccionPrincipal;
         mapPanel.marcarInicio(nodoInicio);
+
+        seleccionPrincipal = null;
+        seleccionSecundaria = null;
+        mapPanel.limpiarSeleccion();
     }
 
     public void marcarComoDestino() {
