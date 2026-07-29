@@ -42,12 +42,12 @@ El algoritmo ``BFS`` explora el grafo nivel por nivel, visitando primero todos l
 
 | Caso | Algoritmo | Inicio | Destino | Nodos Visitados | Cantidad Aristas | Tiempo |
 | ---- |-----------|--------|---------|-----------------|------------------|--------|
-|1     |      g    |        |         |                 |                  |        |
-|1     |           |        |         |                 |                  |        |
-|2     |           |        |         |                 |                  |        | 
-|2     |           |        |         |                 |                  |        |       
-|3     |           |        |         |                 |                  |        |
-|3     |
+|1     |   BFS     |   vvvv |jeuuy    |       9         |    2             |  2ms   |
+|1     |   DFS     |  vvvv  | jeuuy   |       35        |     33           |  0ms    |
+|2     |   BFS     |        |         |             10    |                 |  4ms      | 
+|2     |   DFS     |        |         |                 |                  |        |       
+|3     |   BFS     |        |         |                 |                  |        |
+|3     |   DFS     |        |         |                 |                  |        |
 
 
 ## **Ánalisis Requerido: Preguntas hechas en base a las pruebas:**
@@ -69,7 +69,7 @@ Est. Nataly Jiménez Salazar: La representación de un mapa urbano como un grafo
 práctica los conceptos teóricos de estructuras de datos no lineales.
 
 Est. Michelle Marca: 
+
 Est. Evelyn Mayancela:
 
 
-![alt text](<Captura de pantalla 2026-07-18 095548.png>)

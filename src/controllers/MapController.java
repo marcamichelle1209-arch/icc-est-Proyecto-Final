@@ -191,23 +191,21 @@ public class MapController {
         mapPanel.marcarDestino(nodoDestino);
     }
 
-    public void conectarSeleccionados() {
-        if (seleccionPrincipal == null || seleccionSecundaria == null) {
-            JOptionPane.showMessageDialog(null, "Selecciona dos nodos (clic en cada uno).");
-            return;
-        }
-        mapGraph.addEdge(seleccionPrincipal, seleccionSecundaria);
-        repository.save(mapGraph);
-        mapPanel.repaint();
-
-        if (nodoInicio != null && nodoDestino != null) {
-            JOptionPane.showMessageDialog(null,
-                    "Conexion creada. Ya tenes inicio y destino marcados: presiona 'Play / Ejecutar'.");
-        } else {
-            JOptionPane.showMessageDialog(null,
-                    "Conexion creada entre " + seleccionPrincipal.getId() + " y " + seleccionSecundaria.getId() + ".");
-        }
+  public void conectarSeleccionados(boolean bidireccional) {
+    if (seleccionPrincipal == null || seleccionSecundaria == null) {
+        JOptionPane.showMessageDialog(null, "Selecciona dos nodos (clic en cada uno).");
+        return;
     }
+
+    if (bidireccional) {
+        mapGraph.addEdge(seleccionPrincipal, seleccionSecundaria);
+    } else {
+        mapGraph.addEdgeUni(seleccionPrincipal, seleccionSecundaria);
+    }
+
+    repository.save(mapGraph);
+    mapPanel.repaint();
+}
 
     public void eliminarNodoSeleccionado() {
         if (seleccionPrincipal == null) {

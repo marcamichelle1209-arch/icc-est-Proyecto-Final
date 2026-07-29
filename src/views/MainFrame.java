@@ -57,7 +57,7 @@ public class MainFrame extends JFrame {
         add(mapPanel, BorderLayout.CENTER);
         add(buildResultPanel(), BorderLayout.SOUTH);
 
-        agregarMenuFlotante();
+     
     }
 
     private JPanel buildSidebar() {
@@ -88,7 +88,8 @@ public class MainFrame extends JFrame {
 
         sidebar.add(boton("Agregar nodo (último clic)", e -> controller.agregarNodoUltimoClic()));
         sidebar.add(boton("Eliminar nodo seleccionado", e -> controller.eliminarNodoSeleccionado()));
-        sidebar.add(boton("Conectar seleccionados", e -> controller.conectarSeleccionados()));
+        sidebar.add(boton("Conectar (bidireccional)", e -> controller.conectarSeleccionados(true)));
+        sidebar.add(boton("Conectar (un solo sentido)", e -> controller.conectarSeleccionados(false)));
         sidebar.add(boton("Eliminar conexión seleccionada", e -> controller.eliminarConexionSeleccionada()));
 
         return sidebar;
@@ -132,77 +133,6 @@ public class MainFrame extends JFrame {
         lblResultado.setText("<html>Selección actual: " + principal + " | secundaria: " + secundaria + "</html>");
     }
 
-    // --- Menú flotante (clic derecho sobre el mapa) ---
-    // Agregado como complemento visual: hace exactamente lo mismo que los botones
-    // de la barra lateral, solo que aparece flotando junto al cursor.
-    
-    private void agregarMenuFlotante() {
-        JPopupMenu menuFlotante = new JPopupMenu();
-        menuFlotante.setBorder(BorderFactory.createLineBorder(new Color(60, 60, 60), 1));
-        menuFlotante.setBackground(Color.WHITE);
 
-        JMenuItem titulo = new JMenuItem("Acciones del mapa");
-        titulo.setEnabled(false);
-        titulo.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        titulo.setForeground(new Color(90, 90, 90));
 
-        JMenuItem itemAgregar = itemFlotante("➕  Agregar nodo aquí");
-        JMenuItem itemInicio = itemFlotante("🚩  Marcar como inicio");
-        JMenuItem itemDestino = itemFlotante("🏁  Marcar como destino");
-        JMenuItem itemConectar = itemFlotante("🔗  Conectar seleccionados");
-        JMenuItem itemEliminarNodo = itemFlotante("🗑️  Eliminar nodo seleccionado");
-        JMenuItem itemEliminarConexion = itemFlotante("✂️  Eliminar conexión seleccionada");
-        JMenuItem itemEjecutar = itemFlotante("▶️  Ejecutar búsqueda");
-        JMenuItem itemLimpiar = itemFlotante("🧹  Limpiar recorrido");
-
-        itemAgregar.addActionListener(e -> controller.agregarNodoUltimoClic());
-        itemInicio.addActionListener(e -> controller.marcarComoInicio());
-        itemDestino.addActionListener(e -> controller.marcarComoDestino());
-        itemConectar.addActionListener(e -> controller.conectarSeleccionados());
-        itemEliminarNodo.addActionListener(e -> controller.eliminarNodoSeleccionado());
-        itemEliminarConexion.addActionListener(e -> controller.eliminarConexionSeleccionada());
-        itemEjecutar.addActionListener(e -> ejecutarBusqueda());
-        itemLimpiar.addActionListener(e -> mapPanel.limpiarRecorrido());
-
-        menuFlotante.add(titulo);
-        menuFlotante.addSeparator();
-        menuFlotante.add(itemAgregar);
-        menuFlotante.addSeparator();
-        menuFlotante.add(itemInicio);
-        menuFlotante.add(itemDestino);
-        menuFlotante.addSeparator();
-        menuFlotante.add(itemConectar);
-        menuFlotante.add(itemEliminarNodo);
-        menuFlotante.add(itemEliminarConexion);
-        menuFlotante.addSeparator();
-        menuFlotante.add(itemEjecutar);
-        menuFlotante.add(itemLimpiar);
-
-        mapPanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                mostrarMenuFlotanteSiAplica(e, menuFlotante);
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                mostrarMenuFlotanteSiAplica(e, menuFlotante);
-            }
-        });
-    }
-
-    private void mostrarMenuFlotanteSiAplica(MouseEvent e, JPopupMenu menuFlotante) {
-        if (e.isPopupTrigger()) {
-            controller.onMapClick(e.getX(), e.getY());
-            menuFlotante.show(e.getComponent(), e.getX(), e.getY());
-        }
-    }
-
-    private JMenuItem itemFlotante(String texto) {
-        JMenuItem item = new JMenuItem(texto);
-        item.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        item.setBackground(Color.WHITE);
-        item.setBorder(BorderFactory.createEmptyBorder(6, 14, 6, 14));
-        return item;
-    }
 }
