@@ -69,7 +69,7 @@ _Figura 5. Exploración BFS — Caso 3 (xi a haya)_
 _Figura 6. Exploración DFS — Caso 3 (xi a haya)_
 
 ## **Grafica UML del proyecto :**
-![Diagrama UML](src\resources\diagramaUML.png)
+![Diagrama UML](src/resources/diagramaUML.png)
 _Figura 7. UML_
 
 ## **Ánalisis Requerido: Preguntas hechas en base a las pruebas:**
