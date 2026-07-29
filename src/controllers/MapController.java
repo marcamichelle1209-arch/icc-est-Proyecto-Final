@@ -112,7 +112,8 @@ public class MapController {
             return;
         }
         String id = JOptionPane.showInputDialog("ID del nuevo nodo:");
-        if (id == null || id.isBlank()) return;
+        if (id == null || id.isBlank()) 
+            return;
 
         MapPoint nuevo = new MapPoint(id, ultimoClic.getX(), ultimoClic.getY());
         if (mapGraph.contains(nuevo)) {
