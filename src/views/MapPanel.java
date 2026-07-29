@@ -5,10 +5,7 @@ import structures.graphs.Graph;
 import structures.node.Node;
 
 import javax.imageio.ImageIO;
-<<<<<<< HEAD
-=======
 
->>>>>>> eeede74dc3ba8423109374ba284c0350e47be956
 import javax.swing.JPanel;
 import java.awt.BasicStroke;
 import java.awt.Color;

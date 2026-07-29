@@ -29,11 +29,10 @@ resultante.
 
 ## Descripción de los métodos
 
-![Descripción de la imagen](src\resources\maps\BFS-DFS.png)
+![Descripción de la imagen](src/resources/BFS-DFS.png)
 
 ``DFS PathFinder:`` 
 El algoritmo ``DFS`` explora el grafo avanzando lo más posible por una rama antes de retroceder utilizando ``(LIFO)`` o recursividad. A diferencia de ``BFS``, ``DFS`` no garantiza el camino más corto, pero resulta útil para explorar todas las rutas posibles o verificar la conexión entre nodos.
-
 
 ``BFS PathFinder:`` 
 El algoritmo ``BFS`` explora el grafo nivel por nivel, visitando primero todos los nodos vecinos del nodo actual antes ir a los siguientes, utiliza ``(FIFO)`` para gestionar el orden de visita. Cuando todas las conexiones tienen el mismo costo, ``BFS`` garantiza encontrar el camino más corto entre el nodo de inicio y el nodo de destino.
