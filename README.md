@@ -68,6 +68,10 @@ _Figura 5. Exploración BFS — Caso 3 (xi a haya)_
 ![DFS_Caso3](src/resources/DFS_Caso3.jpeg)
 _Figura 6. Exploración DFS — Caso 3 (xi a haya)_
 
+## **Grafica UML del proyecto :**
+![alt text](<Captura de pantalla 2026-07-29 145603.png>)
+_Figura 7. UML 
+
 ## **Ánalisis Requerido: Preguntas hechas en base a las pruebas:**
 
 ``Costo``: No hace referencia a dinero, si no, cuan caro es realmente recorrer la conexión establecida (tiempo, distancia o dificultad/restricción del paso)
@@ -115,7 +119,7 @@ Actualmente las conexiones del grafo no tienen un costo, solo indican si existe 
 proyecto.
 
 
-``Est. Michelle Marca``: La representación de un mapa urbano como un grafo de nodos y conexiones permite aplicar de forma práctica los conceptos teóricos de estructuras de datos no lineales
+``Est. Michelle Marca``: La representación de un mapa urbano como un grafo de nodos y conexiones que nos permiten aplicar de forma práctica los conceptos teóricos de estructuras de datos no lineales.
 
 ``Est. Evelyn Mayancela:`` ``BFS`` encuentra siempre el camino más corto en saltos, mientras que ``DFS``, al profundizar por una sola rama, visitó muchos más nodos antes de llegar al destino. Separar los algoritmos de la interfaz permitió animar y visualizar claramente esta diferencia.
 
