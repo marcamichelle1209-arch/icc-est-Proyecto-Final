@@ -1,5 +1,4 @@
 package views;
-
 import controllers.MapController;
 import models.MapPoint;
 import structures.graphs.Graph;

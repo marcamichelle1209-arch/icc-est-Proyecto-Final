@@ -127,6 +127,4 @@ public class MainFrame extends JFrame {
         lblResultado.setText("<html>Selección actual: " + principal + " | secundaria: " + secundaria + "</html>");
     }
 
-
-
 }

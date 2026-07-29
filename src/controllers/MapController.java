@@ -71,7 +71,7 @@ public class MapController {
 
         for (int f = 0; f < filas; f++) {
             for (int c = 0; c < columnas; c++) {
-                String id = "" + (char) ('A' + f) + (c + 1); // A1, A2, ... B1, B2, ...
+                String id = "" + (char) ('A' + f) + (c + 1); 
                 int x = inicioX + c * pasoX;
                 int y = inicioY + f * pasoY;
                 MapPoint punto = new MapPoint(id, x, y);
