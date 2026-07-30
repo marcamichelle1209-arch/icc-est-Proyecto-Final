@@ -85,11 +85,29 @@ public class Graph<T> {
         return graph;
     }
 
-    // --- Método auxiliar interno: obtiene la instancia real de Node ya guardada ---
+    // Nos da la instancia real de Node que ya se guardo
     private Node<T> getExistingNode(Node<T> nodo) {
         for (Node<T> n : graph.keySet()) {
             if (n.equals(nodo)) return n;
         }
         return nodo;
     }
+    //esta edita la estructura del grafo original cambia por un nuevo
+    public void renombrarNodo(T viejoValor, T nuevoValor) {
+    Node<T> nodoViejo = getExistingNode(new Node<>(viejoValor));
+    Set<Node<T>> vecinos = graph.get(nodoViejo);
+    if (vecinos == null) return;
+
+    Node<T> nodoNuevo = new Node<>(nuevoValor);
+
+    graph.remove(nodoViejo);
+    graph.put(nodoNuevo, vecinos);
+
+    for (Set<Node<T>> setVecinos : graph.values()) {
+        if (setVecinos.remove(nodoViejo)) {
+            setVecinos.add(nodoNuevo);
+        }
+    }
+}
+    
 }

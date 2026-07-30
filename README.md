@@ -1,11 +1,22 @@
+![alt text](image.png)
+## Estructura de datos
+
 # **Informe Del Proyecto: Implementación y Visualización de rutas en un mapa de calles mediante BFS y DFS**
 
 
 ## _**Nombre de Integrantes:**_
 
 - Nataly Jiménez Salazar 
+Correo institucional:
+njimenezs1@est.ups.edu.ec
+
 - Evelyn Mayancela
+Correo institucional:
+emayancelap@est.ups.edu.ec
+
 - Michelle Marca
+Correo institucional:
+amarca@est.ups.edu.ec
 
 ## **Fecha Inicio:** 17/17/2026
 
@@ -37,6 +48,15 @@ El algoritmo ``DFS`` explora el grafo avanzando lo más posible por una rama ant
 ``BFS PathFinder:`` 
 El algoritmo ``BFS`` explora el grafo nivel por nivel, visitando primero todos los nodos vecinos del nodo actual antes ir a los siguientes, utiliza ``(FIFO)`` para gestionar el orden de visita. Cuando todas las conexiones tienen el mismo costo, ``BFS`` garantiza encontrar el camino más corto entre el nodo de inicio y el nodo de destino.
  
+## **Tecnologias utilizadas:**
+
+- Se utilizo Java como el lenguaje padre de la programacion del proyecto.
+- Utilizacion de Java Swing para la GUI del escritorio(JFrame, JPanel, JPopupMenu, Graphics2D).
+- Respectivas colecciones:
+- Map, Set, List, LinkedHashMap, LinkedHashSet.
+- Finalmemte el uso del MVC:
+Donde esta nuestros modelo, controlador y vista.
+
 ## **Resultados obtenidos:**
 
 *Tabla #1: Comparación de ``BFS`` y ``DFS``*

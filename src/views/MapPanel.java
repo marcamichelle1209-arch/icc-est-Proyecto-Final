@@ -3,9 +3,10 @@ import controllers.MapController;
 import models.MapPoint;
 import structures.graphs.Graph;
 import structures.node.Node;
-
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import javax.imageio.ImageIO;
-
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -24,7 +25,9 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 public class MapPanel extends JPanel {
-
+    private static final int RADIO_NODO = 9; // mismo radio que usas al dibujar los nodos
+    private final JPopupMenu menuNodo = new JPopupMenu();
+    private MapPoint nodoClicDerecho;
     private BufferedImage backgroundImage;
     private final Graph<MapPoint> mapGraph;
     private MapController controller;
@@ -65,15 +68,32 @@ public class MapPanel extends JPanel {
 
         setPreferredSize(new java.awt.Dimension(800, 600));
 
+        // --- construccion del menu flotante ---
+        JMenuItem itemEditarNombre = new JMenuItem("Editar nombre");
+        itemEditarNombre.addActionListener(e -> editarNombreNodo(nodoClicDerecho));
+        menuNodo.add(itemEditarNombre);
+
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ultimoClicX = e.getX();
-                ultimoClicY = e.getY();
-                if (controller != null) {
-                    controller.onMapClick(e.getX(), e.getY());
+                if (e.getButton() == MouseEvent.BUTTON1) { // solo clic izquierdo
+                    ultimoClicX = e.getX();
+                    ultimoClicY = e.getY();
+                    if (controller != null) {
+                        controller.onMapClick(e.getX(), e.getY());
+                    }
+                    repaint();
                 }
-                repaint();
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mostrarMenuSiAplica(e);
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                mostrarMenuSiAplica(e);
             }
         });
 
@@ -178,25 +198,25 @@ public class MapPanel extends JPanel {
     }
 
     // calles del grafo tal como fueron definidas, en celeste brillante
-  private void dibujarAristasGrafo(Graphics2D g2) {
-    g2.setStroke(new BasicStroke(3));
-    for (Node<MapPoint> nodo : mapGraph.getNodes()) {
-        MapPoint origen = nodo.getData();
-        for (Node<MapPoint> vecino : mapGraph.getGraph().get(nodo)) {
-            MapPoint destino = vecino.getData();
+    private void dibujarAristasGrafo(Graphics2D g2) {
+        g2.setStroke(new BasicStroke(3));
+        for (Node<MapPoint> nodo : mapGraph.getNodes()) {
+            MapPoint origen = nodo.getData();
+            for (Node<MapPoint> vecino : mapGraph.getGraph().get(nodo)) {
+                MapPoint destino = vecino.getData();
 
-            boolean esBidireccional = mapGraph.getGraph().get(vecino).contains(nodo);
+                boolean esBidireccional = mapGraph.getGraph().get(vecino).contains(nodo);
 
-            if (esBidireccional) {
-                g2.setColor(new Color(0, 200, 255)); // celeste = bidireccional
-            } else {
-                g2.setColor(new Color(255, 100, 100)); // rojo claro = un solo sentido
+                if (esBidireccional) {
+                    g2.setColor(new Color(0, 200, 255)); // celeste = bidireccional
+                } else {
+                    g2.setColor(new Color(255, 100, 100)); // rojo claro = un solo sentido
+                }
+
+                g2.drawLine(origen.getX(), origen.getY(), destino.getX(), destino.getY());
             }
-
-            g2.drawLine(origen.getX(), origen.getY(), destino.getX(), destino.getY());
         }
     }
-}
 
     private void dibujarAristasExploracion(Graphics2D g2) {
         g2.setColor(new Color(255, 165, 0));
@@ -259,5 +279,45 @@ public class MapPanel extends JPanel {
         g2.drawLine(x - 10, y, x + 10, y);
         g2.drawLine(x, y - 10, x, y + 10);
         g2.drawString("(" + x + "," + y + ")", x + 12, y - 12);
+    }
+
+    private void editarNombreNodo(MapPoint nodo) {
+        if (nodo == null) return;
+        String nuevoNombre = JOptionPane.showInputDialog(
+                this, "Nuevo nombre para el nodo:", nodo.getId());
+
+        if (nuevoNombre != null && !nuevoNombre.isBlank()) {
+            if (nodo.equals(inicioMarcado)) inicioMarcado = null;
+            if (nodo.equals(destinoMarcado)) destinoMarcado = null;
+            if (nodo.equals(seleccionPrincipal)) seleccionPrincipal = null;
+            if (nodo.equals(seleccionSecundaria)) seleccionSecundaria = null;
+
+            MapPoint nodoActualizado = new MapPoint(nuevoNombre.trim(), nodo.getX(), nodo.getY());
+            mapGraph.renombrarNodo(nodo, nodoActualizado);
+            repaint();
+        }
+    }
+
+    // este de aqui aparece si realiza un click derecho en el nodo seleccionado
+    private void mostrarMenuSiAplica(MouseEvent e) {
+        if (!e.isPopupTrigger()) return;
+
+        MapPoint nodo = buscarNodoEn(e.getX(), e.getY());
+        if (nodo != null) {
+            nodoClicDerecho = nodo;
+            menuNodo.show(e.getComponent(), e.getX(), e.getY());
+        }
+    }
+
+    // busca el nodo cuyo circulo dibujado contiene el punto (x, y)
+    private MapPoint buscarNodoEn(int x, int y) {
+        for (Node<MapPoint> nodo : mapGraph.getNodes()) {
+            MapPoint p = nodo.getData();
+            double dist = Math.hypot(p.getX() - x, p.getY() - y);
+            if (dist <= RADIO_NODO) {
+                return p;
+            }
+        }
+        return null;
     }
 }
