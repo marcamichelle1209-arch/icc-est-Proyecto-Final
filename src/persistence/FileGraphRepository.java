@@ -23,12 +23,30 @@ public class FileGraphRepository implements GraphRepository {
         Graph<MapPoint> graph = new Graph<>();
         File archivo = new File(filePath);
 
-        if (!archivo.exists()) {
-            return graph; // grafo vacío si no hay configuración previa
+        List<String> lineas;
+
+        if (archivo.exists()) {
+            // Caso normal: existe el archivo externo en disco
+            try {
+                lineas = Files.readAllLines(Path.of(filePath));
+            } catch (IOException e) {
+                System.err.println("Error al leer la configuración: " + e.getMessage());
+                return graph;
+            }
+        } else {
+            // Respaldo: no existe en disco, buscamos el que viene empaquetado dentro del jar
+            try (InputStream input = getClass().getResourceAsStream("/resources/config/mapa.json")) {
+                if (input == null) {
+                    return graph; // ni externo ni interno: no hay configuración disponible
+                }
+                lineas = new BufferedReader(new InputStreamReader(input)).lines().toList();
+            } catch (IOException e) {
+                System.err.println("Error al leer la configuración empaquetada: " + e.getMessage());
+                return graph;
+            }
         }
 
-        try {
-            List<String> lineas = Files.readAllLines(Path.of(filePath));
+        
             String seccion = "";
 
             for (String linea : lineas) {
@@ -89,10 +107,8 @@ public class FileGraphRepository implements GraphRepository {
                         System.err.println("Arista referencia nodo inexistente, se ignora: " + linea);
                     }
                 }
-            }
-        } catch (IOException e) {
-            System.err.println("Error al leer la configuración: " + e.getMessage());
-        }
+            
+        } 
 
         return graph;
     }
