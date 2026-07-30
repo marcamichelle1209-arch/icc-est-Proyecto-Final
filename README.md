@@ -1,10 +1,11 @@
-![alt text](image.png)
-## Estructura de datos
+![Logo Universidad Politécnica Salesiana](src/resources/logoUPS.jpeg)
+
+# **Estructura de datos**
 
 # **Informe Del Proyecto: Implementación y Visualización de rutas en un mapa de calles mediante BFS y DFS**
 
 
-## _**Nombre de Integrantes:**_
+## **Nombre de Integrantes:**
 
 - Nataly Jiménez Salazar 
 - Correo institucional:
