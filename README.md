@@ -72,6 +72,76 @@ _Figura 6. Exploración DFS — Caso 3 (xi a haya)_
 ![Diagrama UML](src/resources/diagramaUML.png)
 _Figura 7. UML_
 
+## **Arquitectura y estructura de carpetas**
+
+El proyecto sigue el patrón **Modelo - Vista - Controlador (MVC)**, separando la lógica de datos, la lógica de negocio y la interfaz gráfica en paquetes independientes:
+
+- **Modelo (`models`)**: representa los datos puros del dominio, sin ninguna lógica de interfaz. Contiene `MapPoint` (un nodo del mapa con id, x, y) y `VisualizationMode` (enum que define si la animación muestra toda la exploración o solo la ruta final).
+- **Estructuras de datos (`structures`)**: contiene el grafo genérico y los algoritmos de búsqueda, completamente independientes de Swing. Se divide en:
+  - `structures.node`: la clase `Node<T>`, que envuelve cualquier dato dentro del grafo.
+  - `structures.graphs`: `Graph<T>` (el grafo mismo), `Edge<T>` (una arista dirigida), `PathResult<T>` (resultado de una búsqueda), `PathFinder<T>` (interfaz que define el contrato de todo algoritmo de búsqueda), `CycleResult<T>` y `TopologicalResult<T>`.
+  - `structures.implementations`: las implementaciones concretas — `BFSPathFinder`, `DFSPathFinder`, `CycleDetector` y `TopologicalSorter`.
+- **Persistencia (`persistence`)**: `GraphRepository` es la interfaz que define cómo guardar/cargar un grafo; `FileGraphRepository` la implementa guardando en un archivo de texto plano con secciones `[NODOS]` y `[ARISTAS]`.
+- **Controlador (`controllers`)**: `MapController` es el intermediario entre la vista y los datos — recibe los clics del usuario, decide qué algoritmo ejecutar, actualiza el grafo y le indica a la vista qué dibujar.
+- **Vista (`views`)**: `MainFrame` (ventana principal, barra de botones y menú flotante) y `MapPanel` (el lienzo donde se dibuja el mapa, los nodos, las aristas y la animación de búsqueda).
+- **Punto de entrada (`App`)**: `App.java` contiene el `main` que arranca la aplicación.
+
+Esta separación permite, por ejemplo, agregar un nuevo algoritmo de búsqueda creando una clase que implemente `PathFinder`, sin tocar ni una línea de la interfaz gráfica.
+
+### Estructura de carpetas
+
+```
+icc-est-Proyecto-Final/
+├── src/
+│   ├── App/
+│   │   ├── App.java                     # Punto de entrada (main)
+│   │   └── PrototipoMenu.java           # Prototipo aislado del menú flotante
+│   │
+│   ├── models/
+│   │   ├── MapPoint.java                # Nodo del mapa (id, x, y)
+│   │   └── VisualizationMode.java       # Enum: EXPLORATION | FINAL_PATH
+│   │
+│   ├── structures/
+│   │   ├── node/
+│   │   │   └── Node.java                # Envoltorio genérico de un dato en el grafo
+│   │   │
+│   │   ├── graphs/
+│   │   │   ├── Graph.java               # Grafo genérico (mapa de adyacencia)
+│   │   │   ├── Edge.java                # Arista dirigida (origen -> destino)
+│   │   │   ├── PathFinder.java          # Interfaz: contrato de búsqueda
+│   │   │   ├── PathResult.java          # Resultado de una búsqueda
+│   │   │   ├── CycleResult.java         # Resultado de detección de ciclos
+│   │   │   └── TopologicalResult.java   # Resultado de orden topológico
+│   │   │
+│   │   └── implementations/
+│   │       ├── BFSPathFinder.java       # Búsqueda en anchura
+│   │       ├── DFSPathFinder.java       # Búsqueda en profundidad
+│   │       ├── CycleDetector.java       # Detección de ciclos (DFS)
+│   │       └── TopologicalSorter.java   # Orden topológico (Kahn)
+│   │
+│   ├── persistence/
+│   │   ├── GraphRepository.java         # Interfaz: contrato de persistencia
+│   │   └── FileGraphRepository.java     # Guarda/carga el grafo en archivo de texto
+│   │
+│   ├── controllers/
+│   │   └── MapController.java           # Conecta la vista con el grafo y los algoritmos
+│   │
+│   └── views/
+│       ├── MainFrame.java               # Ventana principal + barra lateral + menú flotante
+│       └── MapPanel.java                # Lienzo: dibuja mapa, nodos, aristas y animación
+│
+├── resources/
+│   └── maps/
+│       └── map.png                      # Imagen de fondo del mapa
+│
+├── config/
+│   └── mapa.json                        # Grafo guardado (nodos y aristas)
+│
+├── bin/                                  # Clases compiladas (.class)
+├── .gitignore
+└── README.md
+```
+
 ## **Ánalisis Requerido: Preguntas hechas en base a las pruebas:**
 
 ``Costo``: No hace referencia a dinero, si no, cuan caro es realmente recorrer la conexión establecida (tiempo, distancia o dificultad/restricción del paso)
