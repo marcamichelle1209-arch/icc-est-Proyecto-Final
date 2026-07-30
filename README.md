@@ -7,15 +7,15 @@
 ## _**Nombre de Integrantes:**_
 
 - Nataly Jiménez Salazar 
-Correo institucional:
+- Correo institucional:
 njimenezs1@est.ups.edu.ec
 
 - Evelyn Mayancela
-Correo institucional:
+- Correo institucional:
 emayancelap@est.ups.edu.ec
 
 - Michelle Marca
-Correo institucional:
+- Correo institucional:
 amarca@est.ups.edu.ec
 
 ## **Fecha Inicio:** 17/17/2026
@@ -99,8 +99,8 @@ El proyecto sigue el patrón **Modelo - Vista - Controlador (MVC)**, separando l
 - **Modelo (`models`)**: representa los datos puros del dominio, sin ninguna lógica de interfaz. Contiene `MapPoint` (un nodo del mapa con id, x, y) y `VisualizationMode` (enum que define si la animación muestra toda la exploración o solo la ruta final).
 - **Estructuras de datos (`structures`)**: contiene el grafo genérico y los algoritmos de búsqueda, completamente independientes de Swing. Se divide en:
   - `structures.node`: la clase `Node<T>`, que envuelve cualquier dato dentro del grafo.
-  - `structures.graphs`: `Graph<T>` (el grafo mismo), `Edge<T>` (una arista dirigida), `PathResult<T>` (resultado de una búsqueda), `PathFinder<T>` (interfaz que define el contrato de todo algoritmo de búsqueda), `CycleResult<T>` y `TopologicalResult<T>`.
-  - `structures.implementations`: las implementaciones concretas — `BFSPathFinder`, `DFSPathFinder`, `CycleDetector` y `TopologicalSorter`.
+  - `structures.graphs`: `Graph<T>` (el grafo mismo), `Edge<T>` (una arista dirigida), `PathResult<T>` (resultado de una búsqueda), `PathFinder<T>` (interfaz que define el contrato de todo algoritmo de búsqueda).
+  - `structures.implementations`: las implementaciones concretas — `BFSPathFinder`, `DFSPathFinder`.
 - **Persistencia (`persistence`)**: `GraphRepository` es la interfaz que define cómo guardar/cargar un grafo; `FileGraphRepository` la implementa guardando en un archivo de texto plano con secciones `[NODOS]` y `[ARISTAS]`.
 - **Controlador (`controllers`)**: `MapController` es el intermediario entre la vista y los datos — recibe los clics del usuario, decide qué algoritmo ejecutar, actualiza el grafo y le indica a la vista qué dibujar.
 - **Vista (`views`)**: `MainFrame` (ventana principal, barra de botones y menú flotante) y `MapPanel` (el lienzo donde se dibuja el mapa, los nodos, las aristas y la animación de búsqueda).
@@ -209,14 +209,14 @@ Actualmente las conexiones del grafo no tienen un costo, solo indican si existe 
 proyecto.
 
 
-``Est. Michelle Marca``: La representación de un mapa urbano como un grafo de nodos y conexiones que nos permiten aplicar de forma práctica los conceptos teóricos de estructuras de datos no lineales.
+``Est. Michelle Marca``: Al trabajar con el algoritmo DFS y con la estructura del grafo, pude darme cuenta de que equals() y hashCode() son muy importantes en una clase. Por decirlo, el renombrar el nodo, puede que se genere un error pero que visualmente no se observa. Pero que mas despues nos causaria problemas.
 
 ``Est. Evelyn Mayancela:`` ``BFS`` encuentra siempre el camino más corto en saltos, mientras que ``DFS``, al profundizar por una sola rama, visitó muchos más nodos antes de llegar al destino. Separar los algoritmos de la interfaz permitió animar y visualizar claramente esta diferencia.
 
 ## Recomendaciones: 
 
-- Incorporar pesos en las conexiones para permitir, en trabajos futuros, la implementación de algoritmos
+- El incorporar pesos en las conexiones para permitir, en los trabajos futuros, la implementación de algoritmos
 como ``Dijkstra`` o ``A*`` y comparar sus resultados frente a ``BFS`` y ``DFS``.
-- Agregar validaciones visuales que impidan crear conexiones duplicadas o nodos superpuestos sobre el
-mapa.
+- El Agregar validaciones visuales que impidan la creacion de conexiones duplicadas o nodos  que sean superpuestos sobre el
+mapa elejido.
 
